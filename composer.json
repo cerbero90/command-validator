@@ -1,0 +1,46 @@
+{
+    "name": "cerbero/command-validator",
+    "type": "library",
+    "description": "Validates Laravel console commands input.",
+    "keywords": [
+        "cerbero",
+        "command-validator"
+    ],
+    "homepage": "https://github.com/cerbero90/command-validator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrea Marco Sartori",
+            "email": "andrea.marco.sartori@gmail.com",
+            "homepage": "https://github.com/cerbero90",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "~5.5|~7.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec" : "^2.5",
+        "henrikbjorn/phpspec-code-coverage" : "^2.0",
+        "scrutinizer/ocular": "^1.1",
+        "squizlabs/php_codesniffer": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cerbero\\CommandValidator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cerbero\\CommandValidator\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpspec run -vvv"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
