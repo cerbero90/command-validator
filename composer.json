@@ -41,7 +41,7 @@
         }
     },
     "scripts": {
-        "test": "phpspec run -vvv"
+        "test": "behat"
     },
     "extra": {
         "branch-alias": {
