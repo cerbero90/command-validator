@@ -15,15 +15,16 @@ matrix:
     - php: hhvm
   include:
     - php: 5.5
-      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+
+before_install:
+  - travis_retry composer self-update
+
+install:
+  - travis_retry composer create-project laravel/laravel --no-interaction --prefer-dist
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
+  - travis_retry composer update
 
 script:
   - vendor/bin/phpcs --standard=psr2 src/
-  - vendor/bin/phpspec run -vvv
-
-after_script:
-  - if [[ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '7.0' ]]; then php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover; fi
+  - behat
