@@ -28,6 +28,7 @@
         "behat/mink": "^1.7",
         "behat/mink-extension": "^2.2",
         "laracasts/behat-laravel-extension": "^1.0",
+        "illuminate/console": "^5.2"
     },
     "autoload": {
         "psr-4": {
