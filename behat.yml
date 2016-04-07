@@ -1,0 +1,9 @@
+default:
+    suites:
+        console:
+            paths: [ %paths.base%/tests ]
+    extensions:
+        Laracasts\Behat:
+        Behat\MinkExtension:
+            default_session: laravel
+            laravel: ~
