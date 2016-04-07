@@ -4,7 +4,10 @@
     "description": "Validates Laravel console commands input.",
     "keywords": [
         "cerbero",
-        "command-validator"
+        "command-validator",
+        "console",
+        "commands",
+        "validation"
     ],
     "homepage": "https://github.com/cerbero90/command-validator",
     "license": "MIT",
