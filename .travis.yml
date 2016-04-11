@@ -26,5 +26,4 @@ before_script:
   - travis_retry composer update
 
 script:
-  - vendor/bin/phpcs --standard=psr2 src/
-  - behat
+  - vendor/bin/behat
