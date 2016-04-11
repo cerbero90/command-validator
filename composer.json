@@ -4,7 +4,10 @@
     "description": "Validates Laravel console commands input.",
     "keywords": [
         "cerbero",
-        "command-validator"
+        "command-validator",
+        "console",
+        "commands",
+        "validation"
     ],
     "homepage": "https://github.com/cerbero90/command-validator",
     "license": "MIT",
@@ -20,10 +23,12 @@
         "php" : "~5.5|~7.0"
     },
     "require-dev": {
-        "phpspec/phpspec" : "^2.5",
-        "henrikbjorn/phpspec-code-coverage" : "^2.0",
-        "scrutinizer/ocular": "^1.1",
-        "squizlabs/php_codesniffer": "^2.3"
+        "squizlabs/php_codesniffer": "^2.3",
+        "behat/behat": "^3.1",
+        "behat/mink": "^1.7",
+        "behat/mink-extension": "^2.2",
+        "cerbero/behat-laravel-extension": "^1.0",
+        "laravel/framework": "5.2.*"
     },
     "autoload": {
         "psr-4": {
@@ -31,12 +36,15 @@
         }
     },
     "autoload-dev": {
+        "classmap": [
+            "tests/TestCommand.php"
+        ],
         "psr-4": {
-            "Cerbero\\CommandValidator\\": "tests"
+            "App\\": "laravel/app"
         }
     },
     "scripts": {
-        "test": "phpspec run -vvv"
+        "test": "behat"
     },
     "extra": {
         "branch-alias": {

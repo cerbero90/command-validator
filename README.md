@@ -4,7 +4,6 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![StyleCI][ico-styleci]][link-styleci]
 [![Total Downloads][ico-downloads]][link-downloads]
@@ -12,37 +11,57 @@
 
 [![SensioLabsInsight][ico-sensiolabs]][link-sensiolabs]
 
-**@TODO:** Enable the following services for the current package:
-
-- [Packagist](https://packagist.org/packages/submit)
-- [TravisCI](https://travis-ci.org/profile/cerbero90)
-- [ScrutinizerCI](https://scrutinizer-ci.com/g/new)
-- [StyleCI](https://styleci.io/account)
-- [SensioLabs Insight](https://insight.sensiolabs.com/projects/new)
-
-**@TODO:** Now that StyleCI and SensioLabs are enabled, replace their placeholders with the actual values in all concerned files:
-
-- ```:styleci_repo```
-- ```:sensiolabs_project```
-
-**@TODO:** Delete all the above notes, including this one.
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+Simple and lightweight package to let your Laravel console commands validate the input they receive.
 
 ## Install
 
-Via Composer
+From the root of your project run the following command in the terminal:
 
 ``` bash
-$ composer require cerbero/command-validator
+composer require cerbero/command-validator
 ```
 
 ## Usage
 
+Let the commands of which you want to validate input use this package trait and define the `rules()` method:
+
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+use Illuminate\Console\Command;
+use Cerbero\CommandValidator\ValidatesInput;
+
+class Example extends Command
+{
+    use ValidatesInput;
+
+    public function rules()
+    {
+        return [
+            'year' => 'digits:4|min:2000'
+        ];
+    }
+}
+```
+
+Both arguments and options can be validated, set their name as keys (no dashes for options) and their rules as values in the array returned by the `rules()` method.
+
+The rules available are the [Laravel default ones](https://laravel.com/docs/5.2/validation#available-validation-rules) and of course you can extend them by specifying [your custom rules](https://laravel.com/docs/5.2/validation#custom-validation-rules).
+
+You may also want to indicate custom messages and attributes for some validation errors, in this case just override the methods `messages()` and `attributes()`:
+
+``` php
+public function messages()
+{
+    return [
+        'min' => 'The minimum allowed :attribute is :min'
+    ];
+}
+
+public function attributes()
+{
+    return [
+        'year' => 'year of birth'
+    ];
+}
 ```
 
 ## Change log
@@ -52,7 +71,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 ## Testing
 
 ``` bash
-$ composer test
+composer test
 ```
 
 ## Contributing
@@ -76,20 +95,18 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-version]: https://img.shields.io/packagist/v/cerbero/command-validator.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/cerbero90/command-validator/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/cerbero90/command-validator.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/cerbero90/command-validator.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/:styleci_repo/shield
+[ico-styleci]: https://styleci.io/repos/55499793/shield
 [ico-downloads]: https://img.shields.io/packagist/dt/cerbero/command-validator.svg?style=flat-square
 [ico-gratipay]: https://img.shields.io/gratipay/cerbero.svg?style=flat-square
-[ico-sensiolabs]: https://insight.sensiolabs.com/projects/:sensiolabs_project/big.png
+[ico-sensiolabs]: https://insight.sensiolabs.com/projects/756ebffa-7aa3-464c-a7a4-3f09e37f897a/big.png
 
 [link-author]: https://twitter.com/cerbero90
 [link-packagist]: https://packagist.org/packages/cerbero/command-validator
 [link-travis]: https://travis-ci.org/cerbero90/command-validator
-[link-scrutinizer]: https://scrutinizer-ci.com/g/cerbero90/command-validator/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/cerbero90/command-validator
-[link-styleci]: https://styleci.io/repos/:styleci_repo
+[link-styleci]: https://styleci.io/repos/55499793
 [link-downloads]: https://packagist.org/packages/cerbero/command-validator
 [link-gratipay]: https://gratipay.com/cerbero
-[link-sensiolabs]: https://insight.sensiolabs.com/projects/:sensiolabs_project
+[link-sensiolabs]: https://insight.sensiolabs.com/projects/756ebffa-7aa3-464c-a7a4-3f09e37f897a
 [link-contributors]: ../../contributors
