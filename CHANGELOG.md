@@ -4,19 +4,7 @@ All Notable changes to `command-validator` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## NEXT - YYYY-MM-DD
+## 1.0.0 - 2016-04-12
 
 ### Added
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
+- Trait to validate Laravel console commands
