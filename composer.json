@@ -36,8 +36,11 @@
         }
     },
     "autoload-dev": {
+        "classmap": [
+            "tests/TestCommand.php"
+        ],
         "psr-4": {
-            "Cerbero\\CommandValidator\\": "tests"
+            "App\\": "laravel/app"
         }
     },
     "scripts": {
