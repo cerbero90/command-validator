@@ -46,7 +46,9 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext
      */
     public function iHaveAConsoleCommand()
     {
-        ($command = new TestCommand)->setLaravel(app());
+        $command = new TestCommand;
+
+        $command->setLaravel(app());
 
         $this->tester = new CommandTester($command);
     }
