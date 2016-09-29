@@ -8,7 +8,7 @@ Feature: Console command validation
     When I pass invalid input to the command
     Then I see validation errors in the terminal
 
-  Scenario: Validation fails
+  Scenario: Validation passes
     Given I have a console command
     When I pass valid input to the command
     Then I don't see validation errors in the terminal
