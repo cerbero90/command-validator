@@ -42,11 +42,24 @@ trait ValidatesInput
      */
     protected function validator()
     {
-        $input = array_merge($this->option(), $this->argument());
-
         return $this->validator = $this->validator ?: $this->laravel['validator']->make(
-            $input, $this->rules(), $this->messages(), $this->attributes()
+            $this->filteredInput(), $this->rules(), $this->messages(), $this->attributes()
         );
+    }
+
+    /**
+     * Filter the input to avoid the validation of optional values.
+     *
+     * @author    Andrea Marco Sartori
+     * @return    array
+     */
+    private function filteredInput()
+    {
+        $input = array_merge($this->argument(), $this->option());
+
+        return array_filter($input, function ($value) {
+            return $value !== null;
+        });
     }
 
     /**

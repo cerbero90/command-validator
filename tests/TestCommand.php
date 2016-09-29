@@ -17,7 +17,7 @@ class TestCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'test {year} {--price=}';
+    protected $signature = 'test {year} {--price=} {--country=}';
 
     /**
      * Retrieve the validation rules.
@@ -28,8 +28,9 @@ class TestCommand extends Command
     protected function rules()
     {
         return [
-            'year'  => 'integer|digits:4|min:2000',
-            'price' => 'required',
+            'year'    => 'integer|digits:4|min:2000',
+            'price'   => 'required',
+            'country' => 'in:Italy,Australia',
         ];
     }
 
