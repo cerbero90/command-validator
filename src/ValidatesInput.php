@@ -43,21 +43,22 @@ trait ValidatesInput
     protected function validator()
     {
         return $this->validator = $this->validator ?: $this->laravel['validator']->make(
-            $this->getValidationArray(), $this->rules(), $this->messages(), $this->attributes()
+            $this->filteredInput(), $this->rules(), $this->messages(), $this->attributes()
         );
     }
 
     /**
-     * Format console command input for validation.
+     * Filter the input to avoid the validation of optional values.
      *
-     * @return array
+     * @author    Andrea Marco Sartori
+     * @return    array
      */
-    protected function getValidationArray()
+    private function filteredInput()
     {
-        // Null command arguments and options are filtered to remove such inputs to conform to the Laravel validation
-        // changes introduced in v5.3 concerning null values, which are no longer ignored
-        return array_filter(array_merge($this->option(), $this->argument()), function($var) {
-            return !is_null($var);
+        $input = array_merge($this->argument(), $this->option());
+
+        return array_filter($input, function ($value) {
+            return $value !== null;
         });
     }
 
