@@ -3,6 +3,7 @@
 namespace Cerbero\CommandValidator;
 
 use Orchestra\Testbench\TestCase;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * The ValidatesInput trait test.
@@ -10,6 +11,28 @@ use Orchestra\Testbench\TestCase;
  */
 class ValidatesInputTest extends TestCase
 {
+    /**
+     * The console command tester.
+     *
+     * @var \Symfony\Component\Console\Tester\CommandTester
+     */
+    protected $commandTester;
+
+    /**
+     * Set the tests up
+     *
+     * @return void
+     */
+    public function setUp() : void
+    {
+        parent::setUp();
+
+        $command = new SampleCommand;
+        $command->setLaravel($this->app);
+
+        $this->commandTester = new CommandTester($command);
+    }
+
     /**
      * Get package providers.
      *
@@ -29,27 +52,28 @@ class ValidatesInputTest extends TestCase
      */
     public function showValidationErrors()
     {
-        $errors = $this->getFormattedErrors();
+        $statusCode = $this->commandTester->execute([
+            'year' => 0,
+            '--foo' => 'abc',
+        ]);
 
-        $this->artisan('sample 1 --foo=abc')
-            ->expectsOutput($errors)
-            ->assertExitCode(1);
+        $this->assertSame(1, $statusCode);
+        $this->assertOutputContains('The year of birth must be 4 digits.');
+        $this->assertOutputContains('The minimum allowed year of birth is 2000');
+        $this->assertOutputContains('The foo may not be greater than 2 characters.');
     }
 
     /**
-     * Retrieve the formatted validation errors
+     * Assert that the given message is present in output
      *
-     * @return string
+     * @param string $message
+     * @return void
      */
-    protected function getFormattedErrors() : string
+    protected function assertOutputContains(string $message) : void
     {
-        $expectedErrors = [
-            'The year of birth must be 4 digits.',
-            'The minimum allowed year of birth is 2000',
-            'The foo may not be greater than 2 characters.',
-        ];
+        $output = $this->commandTester->getDisplay();
 
-        return PHP_EOL . PHP_EOL . implode(PHP_EOL, $expectedErrors) . PHP_EOL;
+        $this->assertTrue(strpos($output, $message) !== false);
     }
 
     /**
@@ -57,8 +81,12 @@ class ValidatesInputTest extends TestCase
      */
     public function executeCommandIfValidationPasses()
     {
-        $this->artisan('sample 2000 --foo=ab')
-            ->expectsOutput('Success!')
-            ->assertExitCode(0);
+        $statusCode = $this->commandTester->execute([
+            'year' => 2000,
+            '--foo' => 'ab',
+        ]);
+
+        $this->assertSame(0, $statusCode);
+        $this->assertOutputContains('Success!');
     }
 }
