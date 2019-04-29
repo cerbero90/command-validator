@@ -1,5 +1,5 @@
 build
 composer.lock
-docs
 vendor
-.idea
+phpcs.xml
+phpunit.xml

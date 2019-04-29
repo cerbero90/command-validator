@@ -1,29 +1,36 @@
+dist: trusty
 language: php
 
 php:
-  - 5.5
-  - 5.6
   - 7.0
-  - hhvm
+  - 7.1
+  - 7.2
+  - 7.3
 
 # This triggers builds to run on the new TravisCI infrastructure.
 # See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
+## Cache composer
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 matrix:
-  allow_failures:
-    - php: hhvm
   include:
-    - php: 5.5
-
-before_install:
-  - travis_retry composer self-update
-
-install:
-  - travis_retry composer create-project laravel/laravel --no-interaction --prefer-dist
+    - php: 7.0
+      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
 
 before_script:
-  - travis_retry composer update
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 
 script:
-  - vendor/bin/behat
+  - vendor/bin/phpcs --standard=psr2 src/
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+  - |
+    if [[ "$TRAVIS_PHP_VERSION" != 'hhvm' ]]; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    fi

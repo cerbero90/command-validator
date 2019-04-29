@@ -4,19 +4,27 @@ namespace Cerbero\CommandValidator;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Illuminate\Contracts\Validation\Validator;
 
 /**
- * Validate input submitted to console commands.
+ * The trait to validate console commands input.
  *
- * @author    Andrea Marco Sartori
  */
 trait ValidatesInput
 {
     /**
-     * @author    Andrea Marco Sartori
-     * @var        Illuminate\Validation\Validator    $validator    Input validator.
+     * The command input validator.
+     *
+     * @var \Illuminate\Contracts\Validation\Validator
      */
     protected $validator;
+
+    /**
+     * Retrieve the rules to validate data against
+     *
+     * @return array
+     */
+    abstract protected function rules() : array;
 
     /**
      * Execute the console command.
@@ -27,81 +35,87 @@ trait ValidatesInput
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->validator()->passes()) {
-            return parent::execute($input, $output);
+        if ($this->validator()->fails()) {
+            $this->error($this->formatErrors());
+            // Exit with status code 1
+            return 1;
         }
 
-        return $this->error($this->getFormattedErrors());
+        return parent::execute($input, $output);
     }
 
     /**
-     * Retrieve the input validator.
+     * Retrieve the command input validator
      *
-     * @author    Andrea Marco Sartori
-     * @return    Illuminate\Validation\Validator
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator()
+    protected function validator() : Validator
     {
-        return $this->validator = $this->validator ?: $this->laravel['validator']->make(
-            $this->filteredInput(), $this->rules(), $this->messages(), $this->attributes()
+        if (isset($this->validator)) {
+            return $this->validator;
+        }
+
+        return $this->validator = $this->laravel['validator']->make(
+            $this->getDataToValidate(),
+            $this->rules(),
+            $this->messages(),
+            $this->attributes()
         );
     }
 
     /**
-     * Filter the input to avoid the validation of optional values.
+     * Retrieve the data to validate
      *
-     * @author    Andrea Marco Sartori
-     * @return    array
+     * @return array
      */
-    private function filteredInput()
+    protected function getDataToValidate() : array
     {
-        $input = array_merge($this->argument(), $this->option());
+        $data = array_merge($this->argument(), $this->option());
 
-        return array_filter($input, function ($value) {
+        return array_filter($data, function ($value) {
             return $value !== null;
         });
     }
 
     /**
-     * Retrieve and format the validation errors.
+     * Retrieve the custom error messages
      *
-     * @author    Andrea Marco Sartori
-     * @return    string
+     * @return array
      */
-    protected function getFormattedErrors()
-    {
-        $errors = implode("\n", $this->validator()->errors()->all());
-
-        return "\n\n{$errors}\n";
-    }
-
-    /**
-     * Retrieve the validation rules.
-     *
-     * @author    Andrea Marco Sartori
-     * @return    array
-     */
-    abstract protected function rules();
-
-    /**
-     * Retrieve the custom error messages.
-     *
-     * @author    Andrea Marco Sartori
-     * @return    array
-     */
-    protected function messages()
+    protected function messages() : array
     {
         return [];
     }
 
     /**
-     * Retrieve the custom attributes for error messages.
+     * Retrieve the custom attribute names for error messages
      *
-     * @author    Andrea Marco Sartori
-     * @return    array
+     * @return array
      */
-    protected function attributes()
+    protected function attributes() : array
     {
         return [];
+    }
+
+    /**
+     * Format the validation errors
+     *
+     * @return string
+     */
+    protected function formatErrors() : string
+    {
+        $errors = implode(PHP_EOL, $this->getErrorMessages());
+
+        return PHP_EOL . PHP_EOL . $errors . PHP_EOL;
+    }
+
+    /**
+     * Retrieve the error messages
+     *
+     * @return array
+     */
+    protected function getErrorMessages() : array
+    {
+        return $this->validator()->errors()->all();
     }
 }
