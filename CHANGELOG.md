@@ -6,6 +6,14 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 
 
+## 2.0.0 - 2019-04-30
+
+### Changed
+- Package dependencies
+- Code style
+- Integration tests
+
+
 ## 1.0.1 - 2016-09-29
 
 ### Fixed
