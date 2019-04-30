@@ -19,21 +19,6 @@ class ValidatesInputTest extends TestCase
     protected $commandTester;
 
     /**
-     * Set the tests up
-     *
-     * @return void
-     */
-    public function setUp() : void
-    {
-        parent::setUp();
-
-        $command = new SampleCommand;
-        $command->setLaravel($this->app);
-
-        $this->commandTester = new CommandTester($command);
-    }
-
-    /**
      * Get package providers.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -52,6 +37,8 @@ class ValidatesInputTest extends TestCase
      */
     public function showValidationErrors()
     {
+        $this->setUpCommandTester();
+
         $statusCode = $this->commandTester->execute([
             'year' => 0,
             '--foo' => 'abc',
@@ -64,12 +51,25 @@ class ValidatesInputTest extends TestCase
     }
 
     /**
+     * Set the tests up
+     *
+     * @return void
+     */
+    protected function setUpCommandTester()
+    {
+        $command = new SampleCommand;
+        $command->setLaravel($this->app);
+
+        $this->commandTester = new CommandTester($command);
+    }
+
+    /**
      * Assert that the given message is present in output
      *
      * @param string $message
      * @return void
      */
-    protected function assertOutputContains(string $message) : void
+    protected function assertOutputContains(string $message)
     {
         $output = $this->commandTester->getDisplay();
 
@@ -81,6 +81,8 @@ class ValidatesInputTest extends TestCase
      */
     public function executeCommandIfValidationPasses()
     {
+        $this->setUpCommandTester();
+
         $statusCode = $this->commandTester->execute([
             'year' => 2000,
             '--foo' => 'ab',
