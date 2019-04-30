@@ -1,12 +1,13 @@
 {
     "name": "cerbero/command-validator",
     "type": "library",
-    "description": "Validates Laravel console commands input.",
+    "description": "Validate Laravel console commands input.",
     "keywords": [
         "cerbero",
         "command-validator",
         "console",
         "commands",
+        "validator",
         "validation"
     ],
     "homepage": "https://github.com/cerbero90/command-validator",
@@ -20,15 +21,14 @@
         }
     ],
     "require": {
-        "php" : "~5.5|~7.0"
+        "php": "^7.0.8",
+        "illuminate/contracts": "^5.5",
+        "symfony/console": ">=3.3.7"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^2.3",
-        "behat/behat": "^3.1",
-        "behat/mink": "^1.7",
-        "behat/mink-extension": "^2.2",
-        "cerbero/behat-laravel-extension": "^1.0",
-        "laravel/framework": "5.2.*"
+        "orchestra/testbench": "^3.5",
+        "phpunit/phpunit": ">=6.0",
+        "squizlabs/php_codesniffer": "^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -36,19 +36,21 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/TestCommand.php"
-        ],
         "psr-4": {
-            "App\\": "laravel/app"
+            "Cerbero\\CommandValidator\\": "tests"
         }
     },
     "scripts": {
-        "test": "behat"
+        "test": "phpunit",
+        "check-style": "phpcs src tests",
+        "fix-style": "phpcbf src tests"
     },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
