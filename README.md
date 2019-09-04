@@ -21,7 +21,7 @@ $ composer require cerbero/command-validator
 
 ## Usage
 
-This package merely consists in the `ValidatesInput` trait that Artisan commands can use to define their validation rules via the `rules()` method:
+This package merely consists in the `ValidatesInput` trait that Artisan commands can use to define their own validation rules for arguments and options in the `rules()` method:
 
 ``` php
 use Illuminate\Console\Command;
@@ -34,15 +34,16 @@ class SampleCommand extends Command
     public function rules()
     {
         return [
-            'year' => 'integer|digits:4|min:2000'
+            'year' => 'integer|digits:4|min:2000',
+            'some_option' => 'string|max:2',
         ];
     }
 }
 ```
 
-Both arguments and options can be validated with the [rules provided by Laravel][link-rules]. If you need custom validation, please have a look at [how to define custom rules][link-custom-rules].
+The available rules are the same [validation rules][link-rules] provided by Laravel. If you need custom validation, please have a look at [how to define custom rules][link-custom-rules].
 
-Sometimes you may need to show custom messages or attributes for some validation errors, you can achieve that by overriding the methods `messages()` and `attributes()`:
+Sometimes you may need to show custom messages or attributes for some validation errors. You can achieve that by overriding the methods `messages()` and `attributes()`:
 
 ``` php
 public function messages()
