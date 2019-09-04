@@ -5,6 +5,7 @@ namespace Cerbero\CommandValidator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Contracts\Validation\Validator;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
  * The trait to validate console commands input.
@@ -24,7 +25,7 @@ trait ValidatesInput
      *
      * @return array
      */
-    abstract protected function rules() : array;
+    abstract protected function rules(): array;
 
     /**
      * Execute the console command.
@@ -32,13 +33,12 @@ trait ValidatesInput
      * @param  \Symfony\Component\Console\Input\InputInterface  $input
      * @param  \Symfony\Component\Console\Output\OutputInterface  $output
      * @return mixed
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($this->validator()->fails()) {
-            $this->error($this->formatErrors());
-            // Exit with status code 1
-            return 1;
+            throw new InvalidArgumentException($this->formatErrors());
         }
 
         return parent::execute($input, $output);
@@ -49,7 +49,7 @@ trait ValidatesInput
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator() : Validator
+    protected function validator(): Validator
     {
         if (isset($this->validator)) {
             return $this->validator;
@@ -68,7 +68,7 @@ trait ValidatesInput
      *
      * @return array
      */
-    protected function getDataToValidate() : array
+    protected function getDataToValidate(): array
     {
         $data = array_merge($this->argument(), $this->option());
 
@@ -78,11 +78,21 @@ trait ValidatesInput
     }
 
     /**
+     * Format the validation errors
+     *
+     * @return string
+     */
+    protected function formatErrors(): string
+    {
+        return implode(PHP_EOL, $this->validator()->errors()->all());
+    }
+
+    /**
      * Retrieve the custom error messages
      *
      * @return array
      */
-    protected function messages() : array
+    protected function messages(): array
     {
         return [];
     }
@@ -92,30 +102,8 @@ trait ValidatesInput
      *
      * @return array
      */
-    protected function attributes() : array
+    protected function attributes(): array
     {
         return [];
-    }
-
-    /**
-     * Format the validation errors
-     *
-     * @return string
-     */
-    protected function formatErrors() : string
-    {
-        $errors = implode(PHP_EOL, $this->getErrorMessages());
-
-        return PHP_EOL . PHP_EOL . $errors . PHP_EOL;
-    }
-
-    /**
-     * Retrieve the error messages
-     *
-     * @return array
-     */
-    protected function getErrorMessages() : array
-    {
-        return $this->validator()->errors()->all();
     }
 }

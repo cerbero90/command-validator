@@ -3,6 +3,7 @@
 namespace Cerbero\CommandValidator;
 
 use Orchestra\Testbench\TestCase;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -39,15 +40,19 @@ class ValidatesInputTest extends TestCase
     {
         $this->setUpCommandTester();
 
-        $statusCode = $this->commandTester->execute([
+        $errors = [
+            'The year of birth must be 4 digits.',
+            'The minimum allowed year of birth is 2000',
+            'The foo may not be greater than 2 characters.',
+        ];
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(implode(PHP_EOL, $errors));
+
+        $this->commandTester->execute([
             'year' => 0,
             '--foo' => 'abc',
         ]);
-
-        $this->assertSame(1, $statusCode);
-        $this->assertOutputContains('The year of birth must be 4 digits.');
-        $this->assertOutputContains('The minimum allowed year of birth is 2000');
-        $this->assertOutputContains('The foo may not be greater than 2 characters.');
     }
 
     /**
@@ -64,19 +69,6 @@ class ValidatesInputTest extends TestCase
     }
 
     /**
-     * Assert that the given message is present in output
-     *
-     * @param string $message
-     * @return void
-     */
-    protected function assertOutputContains(string $message)
-    {
-        $output = $this->commandTester->getDisplay();
-
-        $this->assertTrue(strpos($output, $message) !== false);
-    }
-
-    /**
      * @test
      */
     public function executeCommandIfValidationPasses()
@@ -90,5 +82,18 @@ class ValidatesInputTest extends TestCase
 
         $this->assertSame(0, $statusCode);
         $this->assertOutputContains('Success!');
+    }
+
+    /**
+     * Assert that the given message is present in output
+     *
+     * @param string $message
+     * @return void
+     */
+    protected function assertOutputContains(string $message)
+    {
+        $output = $this->commandTester->getDisplay();
+
+        $this->assertTrue(strpos($output, $message) !== false);
     }
 }
