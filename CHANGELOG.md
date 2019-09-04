@@ -6,6 +6,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 
 
+## 2.1.0 - 2019-09-04
+
+### Changed
+- Throw native exception instead of outputting errors manually
+
+
 ## 2.0.0 - 2019-04-30
 
 ### Changed
