@@ -31,7 +31,7 @@ class SampleCommand extends Command
 {
     use ValidatesInput;
 
-    public function rules()
+    protected function rules()
     {
         return [
             'year' => 'integer|digits:4|min:2000',
@@ -46,14 +46,14 @@ The available rules are the same [validation rules][link-rules] provided by Lara
 Sometimes you may need to show custom messages or attributes for some validation errors. You can achieve that by overriding the methods `messages()` and `attributes()`:
 
 ``` php
-public function messages()
+protected function messages()
 {
     return [
         'min' => 'The minimum allowed :attribute is :min'
     ];
 }
 
-public function attributes()
+protected function attributes()
 {
     return [
         'year' => 'year of birth'
