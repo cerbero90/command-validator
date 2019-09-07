@@ -6,6 +6,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 
 
+## 2.2.0 - 2019-09-07
+
+### Added
+- Support for Laravel 6
+
+
 ## 2.1.0 - 2019-09-04
 
 ### Changed
