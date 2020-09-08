@@ -18,7 +18,7 @@ class ConsoleServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->commands(SampleCommand::class);
+            $this->commands(SampleCommand::class, JustValidationCommand::class);
         }
     }
 }
