@@ -36,7 +36,7 @@ class ValidatesInputTest extends TestCase
     /**
      * @test
      */
-    public function showValidationErrors()
+    public function showValidationErrorsWithCustomMessagesAndAttributes()
     {
         $this->setUpCommandTester();
 
@@ -95,5 +95,29 @@ class ValidatesInputTest extends TestCase
         $output = $this->commandTester->getDisplay();
 
         $this->assertTrue(strpos($output, $message) !== false);
+    }
+
+    /**
+     * @test
+     */
+    public function showValidationErrors()
+    {
+        $command = new JustValidationCommand;
+        $command->setLaravel($this->app);
+        $commandTester = new CommandTester($command);
+
+        $errors = [
+            'The year must be 4 digits.',
+            'The year must be at least 2000.',
+            'The foo may not be greater than 2 characters.',
+        ];
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(implode(PHP_EOL, $errors));
+
+        $commandTester->execute([
+            'year' => 0,
+            '--foo' => 'abc',
+        ]);
     }
 }
