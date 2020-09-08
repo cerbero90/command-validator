@@ -6,6 +6,12 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 
 
+## 2.3.0 - 2020-09-09
+
+### Added
+- Support for Laravel 8
+
+
 ## 2.2.1 - 2020-03-04
 
 ### Added
