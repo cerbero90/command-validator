@@ -62,7 +62,7 @@ class ValidatesInputTest extends TestCase
      */
     protected function setUpCommandTester()
     {
-        $command = new SampleCommand;
+        $command = new SampleCommand();
         $command->setLaravel($this->app);
 
         $this->commandTester = new CommandTester($command);
@@ -102,7 +102,7 @@ class ValidatesInputTest extends TestCase
      */
     public function showValidationErrors()
     {
-        $command = new JustValidationCommand;
+        $command = new JustValidationCommand();
         $command->setLaravel($this->app);
         $commandTester = new CommandTester($command);
 
