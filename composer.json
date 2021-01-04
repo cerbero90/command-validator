@@ -19,12 +19,12 @@
         "role": "Developer"
     }],
     "require": {
-        "php": "^7.0.8",
-        "illuminate/contracts": "^5.5|^6.0|^7.0|^8.0",
+        "php": "^7.0||^8.0",
+        "illuminate/contracts": ">=5.5",
         "symfony/console": ">=3.3.7"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.5|^4.0|^5.0|^6.0",
+        "orchestra/testbench": ">=3.5",
         "phpunit/phpunit": ">=6.0",
         "squizlabs/php_codesniffer": "^3.0"
     },
