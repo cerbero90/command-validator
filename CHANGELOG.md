@@ -6,6 +6,17 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 
 
+## 2.4.0 - 2021-04-01
+
+### Added
+- Support for PHP 8
+- Compliance with PSR-12
+
+### Changed
+- Replaced Travis with GitHub actions
+
+
+
 ## 2.3.0 - 2020-09-09
 
 ### Added

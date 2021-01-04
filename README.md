@@ -1,10 +1,14 @@
 # Command Validator
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
+[![Author][ico-author]][link-author]
+[![PHP Version][ico-php]][link-php]
+[![Laravel Version][ico-laravel]][link-laravel]
+[![Build Status][ico-actions]][link-actions]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
+[![Latest Version][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![PSR-12][ico-psr12]][link-psr12]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 [![SensioLabsInsight][ico-sensiolabs]][link-sensiolabs]
@@ -88,16 +92,24 @@ If you discover any security related issues, please email andrea.marco.sartori@g
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/cerbero/command-validator.svg?style=flat-square
+[ico-author]: https://img.shields.io/static/v1?label=author&message=cerbero90&color=50ABF1&logo=twitter&style=flat-square
+[ico-php]: https://img.shields.io/packagist/php-v/cerbero/command-validator?color=%234F5B93&logo=php&style=flat-square
+[ico-laravel]: https://img.shields.io/static/v1?label=laravel&message=%E2%89%A55.5&color=ff2d20&logo=laravel&style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/cerbero/command-validator.svg?label=version&style=flat-square
+[ico-actions]: https://img.shields.io/github/workflow/status/cerbero90/command-validator/build?style=flat-square&logo=github
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/cerbero90/command-validator/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/cerbero90/command-validator.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/cerbero90/command-validator.svg?style=flat-square
+[ico-psr12]: https://img.shields.io/static/v1?label=compliance&message=PSR-12&color=blue&style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/cerbero90/command-validator.svg?style=flat-square&logo=scrutinizer
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/cerbero90/command-validator.svg?style=flat-square&logo=scrutinizer
 [ico-downloads]: https://img.shields.io/packagist/dt/cerbero/command-validator.svg?style=flat-square
 [ico-sensiolabs]: https://insight.sensiolabs.com/projects/756ebffa-7aa3-464c-a7a4-3f09e37f897a/big.png
 
+[link-author]: https://twitter.com/cerbero90
+[link-php]: https://www.php.net
+[link-laravel]: https://laravel.com
 [link-packagist]: https://packagist.org/packages/cerbero/command-validator
-[link-travis]: https://travis-ci.org/cerbero90/command-validator
+[link-actions]: https://github.com/cerbero90/command-validator/actions?query=workflow%3Abuild
+[link-psr12]: https://www.php-fig.org/psr/psr-12/
 [link-scrutinizer]: https://scrutinizer-ci.com/g/cerbero90/command-validator/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/cerbero90/command-validator
 [link-downloads]: https://packagist.org/packages/cerbero/command-validator

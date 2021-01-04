@@ -34,7 +34,7 @@ class SampleCommand extends Command
      *
      * @return array
      */
-    protected function rules() : array
+    protected function rules(): array
     {
         return [
             'year' => 'digits:4|integer|min:2000',
@@ -47,7 +47,7 @@ class SampleCommand extends Command
      *
      * @return array
      */
-    protected function messages() : array
+    protected function messages(): array
     {
         return [
             'min' => 'The minimum allowed :attribute is :min',
@@ -59,7 +59,7 @@ class SampleCommand extends Command
      *
      * @return array
      */
-    protected function attributes() : array
+    protected function attributes(): array
     {
         return [
             'year' => 'year of birth'
