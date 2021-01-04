@@ -6,6 +6,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 
 
+## 2.4.1 - 2021-04-01
+
+### Added
+- GitHub directory to Git attributes
+
+### Fixed
+- Scrutinizer settings for coverage
+
+
 ## 2.4.0 - 2021-04-01
 
 ### Added
@@ -14,7 +23,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 ### Changed
 - Replaced Travis with GitHub actions
-
 
 
 ## 2.3.0 - 2020-09-09
