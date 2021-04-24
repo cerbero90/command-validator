@@ -6,6 +6,15 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 
 
 
+## 2.5.0 - 2021-04-24
+
+### Added
+- Support for Laravel Octane
+
+### Fixed
+- Validation message that changed in Laravel 8, making tests inconsistent
+
+
 ## 2.4.1 - 2021-04-01
 
 ### Added
