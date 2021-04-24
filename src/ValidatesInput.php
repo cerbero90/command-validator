@@ -4,7 +4,8 @@ namespace Cerbero\CommandValidator;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Contracts\Validation\Validator as ValidatorContract;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
@@ -49,13 +50,13 @@ trait ValidatesInput
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(): Validator
+    protected function validator(): ValidatorContract
     {
         if (isset($this->validator)) {
             return $this->validator;
         }
 
-        return $this->validator = $this->laravel['validator']->make(
+        return $this->validator = Validator::make(
             $this->getDataToValidate(),
             $this->rules(),
             $this->messages(),

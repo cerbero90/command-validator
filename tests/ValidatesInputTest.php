@@ -43,7 +43,7 @@ class ValidatesInputTest extends TestCase
         $errors = [
             'The year of birth must be 4 digits.',
             'The minimum allowed year of birth is 2000',
-            'The foo may not be greater than 2 characters.',
+            'The foo field must be true or false.',
         ];
 
         $this->expectException(InvalidArgumentException::class);
@@ -77,7 +77,7 @@ class ValidatesInputTest extends TestCase
 
         $statusCode = $this->commandTester->execute([
             'year' => 2000,
-            '--foo' => 'ab',
+            '--foo' => false,
         ]);
 
         $this->assertSame(0, $statusCode);
@@ -109,7 +109,7 @@ class ValidatesInputTest extends TestCase
         $errors = [
             'The year must be 4 digits.',
             'The year must be at least 2000.',
-            'The foo may not be greater than 2 characters.',
+            'The foo field must be true or false.',
         ];
 
         $this->expectException(InvalidArgumentException::class);
