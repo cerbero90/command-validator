@@ -2,6 +2,7 @@
 
 namespace Cerbero\CommandValidator;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -17,7 +18,7 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
+        if (App::runningInConsole()) {
             $this->commands(SampleCommand::class, JustValidationCommand::class);
         }
     }

@@ -38,7 +38,7 @@ class JustValidationCommand extends Command
     {
         return [
             'year' => 'digits:4|integer|min:2000',
-            'foo' => 'string|max:2',
+            'foo' => 'boolean',
         ];
     }
 }
