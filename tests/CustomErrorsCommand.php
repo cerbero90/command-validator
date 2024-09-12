@@ -1,38 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Cerbero\CommandValidator;
 
 use Illuminate\Console\Command;
 
 /**
- * The sample command.
- *
+ * A testing command with custom validation errors.
  */
-class SampleCommand extends Command
+final class CustomErrorsCommand extends Command
 {
     use ValidatesInput;
 
     /**
-     * The name and signature of the console command.
+     * The signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sample {year} {--foo=}';
+    protected $signature = 'custom-errors {year} {--foo=}';
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
-        $this->info('Success!');
+        $this->info('success!');
+
+        return self::SUCCESS;
     }
 
     /**
-     * Retrieve the rules to validate data against
+     * Retrieve the validation rules.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function rules(): array
     {
@@ -43,9 +44,9 @@ class SampleCommand extends Command
     }
 
     /**
-     * Retrieve the custom error messages
+     * Retrieve the custom error messages.
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function messages(): array
     {
@@ -55,14 +56,14 @@ class SampleCommand extends Command
     }
 
     /**
-     * Retrieve the custom attribute names for error messages
+     * Retrieve the custom error attributes.
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function attributes(): array
     {
         return [
-            'year' => 'year of birth'
+            'year' => 'year of birth',
         ];
     }
 }

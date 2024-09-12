@@ -10,5 +10,8 @@
     <arg value="s" />
 
     <!-- Use the PSR12 Standard-->
-    <rule ref="PSR12" />
+    <rule ref="PSR12">
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" />
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine" />
+    </rule>
 </ruleset>

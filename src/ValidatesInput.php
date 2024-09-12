@@ -1,87 +1,78 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Cerbero\CommandValidator;
 
+use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Illuminate\Contracts\Validation\Validator as ValidatorContract;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
- * The trait to validate console commands input.
- *
+ * The trait to validate the input of console commands.
  */
 trait ValidatesInput
 {
     /**
-     * The command input validator.
-     *
-     * @var \Illuminate\Contracts\Validation\Validator
+     * The validator.
      */
-    protected $validator;
+    protected Validator $validator;
 
     /**
-     * Retrieve the rules to validate data against
+     * Retrieve the validation rules.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     abstract protected function rules(): array;
 
     /**
      * Execute the console command.
-     *
-     * @param  \Symfony\Component\Console\Input\InputInterface  $input
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-     * @return mixed
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->validator()->fails()) {
-            throw new InvalidArgumentException($this->formatErrors());
+            $this->printErrors($this->formatErrors());
+
+            return static::FAILURE;
         }
 
         return parent::execute($input, $output);
     }
 
     /**
-     * Retrieve the command input validator
-     *
-     * @return \Illuminate\Contracts\Validation\Validator
+     * Retrieve the validator.
      */
-    protected function validator(): ValidatorContract
+    protected function validator(): Validator
     {
-        if (isset($this->validator)) {
-            return $this->validator;
-        }
-
-        return $this->validator = Validator::make(
+        /** @phpstan-ignore-next-line */
+        return $this->validator ??= $this->laravel['validator']->make(
             $this->getDataToValidate(),
             $this->rules(),
             $this->messages(),
-            $this->attributes()
+            $this->attributes(),
         );
     }
 
     /**
-     * Retrieve the data to validate
+     * Retrieve the data to validate.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getDataToValidate(): array
     {
-        $data = array_merge($this->argument(), $this->option());
-
-        return array_filter($data, function ($value) {
-            return $value !== null;
-        });
+        return array_filter([...$this->argument(), ...$this->option()], fn(mixed $value) => $value !== null);
     }
 
     /**
-     * Format the validation errors
-     *
-     * @return string
+     * Print the given errors to the console.
+     */
+    protected function printErrors(string $errors): void
+    {
+        $this->output->block($errors, style: 'fg=white;bg=red', prefix: '  ', padding: true);
+    }
+
+    /**
+     * Format the validation errors.
      */
     protected function formatErrors(): string
     {
@@ -89,9 +80,9 @@ trait ValidatesInput
     }
 
     /**
-     * Retrieve the custom error messages
+     * Retrieve the custom error messages.
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function messages(): array
     {
@@ -99,9 +90,9 @@ trait ValidatesInput
     }
 
     /**
-     * Retrieve the custom attribute names for error messages
+     * Retrieve the custom error attributes.
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function attributes(): array
     {

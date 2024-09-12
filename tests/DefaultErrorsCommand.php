@@ -1,38 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Cerbero\CommandValidator;
 
 use Illuminate\Console\Command;
 
 /**
- * The command to test validation only without overrides.
- *
+ * A testing command with default validation errors.
  */
-class JustValidationCommand extends Command
+final class DefaultErrorsCommand extends Command
 {
     use ValidatesInput;
 
     /**
-     * The name and signature of the console command.
+     * The signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'just-validation {year} {--foo=}';
+    protected $signature = 'default-errors {year} {--foo=}';
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): int
     {
-        $this->info('Success!');
+        $this->info('success!');
+
+        return self::SUCCESS;
     }
 
     /**
-     * Retrieve the rules to validate data against
+     * Retrieve the validation rules.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function rules(): array
     {
