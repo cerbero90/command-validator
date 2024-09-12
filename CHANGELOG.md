@@ -2,8 +2,13 @@
 
 All notable changes to `command-validator` will be documented in this file.
 
-Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+Updates should follow the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+
+## 3.0.0 - 2024-09-12
+
+### Added
+- Support for Laravel 11
 
 
 ## 2.5.0 - 2021-04-24
