@@ -45,7 +45,7 @@ class SampleCommand extends Command
 }
 ```
 
-The available rules are the same [validation rules provided by Laravel](https://laravel.com/docs/validation#available-validation-rules). If you need custom validation, please have a look at [how to define custom rules](https://laravel.com/docs/validation#custom-validation-rules).
+The available rules are the same [validation rules provided by Laravel](https://laravel.com/docs/validation#available-validation-rules). If we need custom validation, here is how we can [define custom rules in Laravel](https://laravel.com/docs/validation#custom-validation-rules).
 
 Sometimes we may need to show custom messages or attributes for some validation errors. We can achieve that by overriding the methods `messages()` and `attributes()`:
 
