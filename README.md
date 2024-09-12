@@ -25,7 +25,7 @@ composer require cerbero/command-validator
 
 ## 🔮 Usage
 
-To validate the input of our console commands, we can let our commands use the `ValidatesInput` trait and implement the `rules()` method with the validation rules for our arguments and options:
+To validate the input of our console commands, we can use the `ValidatesInput` trait and define the validation rules for our arguments and options in the `rules()` method:
 
 ```php
 use Illuminate\Console\Command;
