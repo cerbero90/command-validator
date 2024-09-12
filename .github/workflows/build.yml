@@ -13,6 +13,7 @@ jobs:
             matrix:
                 php: [8.2, 8.3]
                 laravel: [11.*]
+                testbench: [9.*]
                 dependency-version: [prefer-lowest, prefer-stable]
                 os: [ubuntu-latest]
 
